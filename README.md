@@ -26,6 +26,6 @@ To get more familiar with git you just need to work with it, but here are some h
 [nice 'tutorial' for git on command line](https://docs.gitlab.com/ee/gitlab-basics/start-using-git.html)
 
 # Authors 
-Benedetta Manzato
-Nicole Tabarini
-Panayiotis Soteriou
+Benedetta Manzato \n
+Nicole Tabarini  \n
+Panayiotis Soteriou  \n
