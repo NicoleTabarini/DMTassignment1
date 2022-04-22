@@ -6,7 +6,8 @@ data = pd.read_csv("dataset_mood_smartphone.csv")
 d = data.iloc[:, 1:]
 d[['date','time']] = d.time.str.split(" ",expand=True)
 d = d[["id","date","time","variable","value"]]
-#print(d)
+
+
 
 l = []
 for value in d["variable"]:
@@ -15,12 +16,13 @@ for value in d["variable"]:
 
 mod = d.groupby(["id","date","variable"],as_index=False)["value"].mean()
 
-#mod.to_csv("o.csv")
-#print(mod)
+
+
 new=pd.DataFrame(mod["id"],columns=["id","date",'mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.finance', 'appCat.game', 'appCat.office', 'appCat.other', 'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather'])
 new["date"] = mod["date"]
 new_group = new.groupby(["id","date"],as_index=False).mean()
-#print(new_group)
+
+
 
 ind = 0
 for row in mod.itertuples():
@@ -31,22 +33,17 @@ for row in mod.itertuples():
         if mod["date"].iloc[row.Index+1] != mod["date"].iloc[row.Index]:
                 ind += 1
 
-#new_group.to_csv("new.csv",na_rep='NA')
-
 
 
 
 # Obtain the same as new_group, but with the sum for some variables instead of mean
 data_sum = pd.read_csv("mood_data_sum.csv")
-rearranged  = pd.DataFrame(new_group["id"],columns=["id","date","mean_mood", 'mean_circumplex.arousal', 'mean_circumplex.valence', 'sum_call', 'sum_sms', 'mean_activity', 'sum_screen', 'sum_appCat.builtin', 'sum_appCat.communication', 'sum_appCat.entertainment', 'sum_appCat.finance', 'sum_appCat.game', 'sum_appCat.office', 'sum_appCat.other', 'sum_appCat.social', 'sum_appCat.travel', 'sum_appCat.unknown', 'sum_appCat.utilities', 'sum_appCat.weather'])
-rearranged["date"]=new_group["date"]
+rearranged = pd.DataFrame(new_group["id"],columns=["id","date","mean_mood", 'mean_circumplex.arousal', 'mean_circumplex.valence', 'sum_call', 'sum_sms', 'mean_activity', 'sum_screen', 'sum_appCat.builtin', 'sum_appCat.communication', 'sum_appCat.entertainment', 'sum_appCat.finance', 'sum_appCat.game', 'sum_appCat.office', 'sum_appCat.other', 'sum_appCat.social', 'sum_appCat.travel', 'sum_appCat.unknown', 'sum_appCat.utilities', 'sum_appCat.weather'])
+rearranged["date"] = new_group["date"]
 
 v_names=list(data_sum.columns.values)
 for n in range(2,len(v_names)):
     rearranged[v_names[n]]=data_sum[v_names[n]]
-
-#rearranged.to_csv("rearranged.csv",na_rep='NA')
-
 
 
 
@@ -59,8 +56,6 @@ for row in range(len(no_missing)):
             cleaned = cleaned.drop(index=row)
         except:
             cleaned = rearranged.drop(index=row)
-#print(cleaned)
-#cleaned.to_csv("cleaned.csv",na_rep='NA')
 
 
 
@@ -85,14 +80,11 @@ for p in patients:
                 f_clean
             except:
                 f_clean=p
-    #print(f_clean)
     try:
         final = final.append(f_clean)
     except:
         final = f_clean
     del f_clean
-
-#final.to_csv("final_withNA.csv",na_rep='NA')
 
 
 
@@ -116,7 +108,7 @@ for p in patients:
         f_row += 1
     i+=1
 
-#f_final.to_csv("FINAL_FINAL.csv",na_rep='NA')
+f_final.to_csv("FINAL_FINAL.csv",na_rep='NA')
 
 
 
@@ -150,6 +142,6 @@ for i in patients:
     except:
         avg_merged = computeavg(i)
 
-# remove the last 5 empty rows for each patient
+# Remove the last 5 empty rows for each patient
 avg5_final = avg_merged.dropna(thresh=2)
-avg5_final.to_csv("5days_final_final.csv")
+avg5_final.to_csv("5days_final_final.csv",na_rep='NA')
