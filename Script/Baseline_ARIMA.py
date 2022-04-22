@@ -35,12 +35,13 @@ print("mape",mean_absolute_percentage_error(test,pred))
 rmse = sqrt(mean_squared_error(test, pred))
 print("rmse",rmse)
 print("wmape",sum(np.abs(test - pred))/sum(test))
-test.reset_index(inplace=True, drop=True)
-pred.reset_index(inplace=True, drop=True)
+
 
 
 
 # Plot model performance vs actual values
+test.reset_index(inplace=True, drop=True)
+pred.reset_index(inplace=True, drop=True)
 plt.figure(figsize=(12,5), dpi=100)
 plt.plot(test, label='actual')
 plt.plot(pred, label='baseline prediction')
